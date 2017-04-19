@@ -57,5 +57,40 @@ describe '/api/v1/messages', type: :request do
       get_new_messages(moment: msg2.id)
       expect(body_as_json[:data]).to have(0).items
     end
+
+    it 'returns moment equal to last created message' do
+      get_new_messages(moment: 0)
+      expect(body_as_json[:meta][:moment]).to eq(Message.order(:id).last.id)
+    end
+  end
+
+  describe 'join' do
+
+    def join(user: 123)
+      post('/api/v1/messages/join.json', params: {user: user})
+    end
+
+    let!(:old_messages) { FactoryGirl.create_list(:message, 5) }
+
+    it 'returns success HTTP response' do
+      join
+      expect(response).to have_http_status(:success)
+    end
+
+    it 'returns 1 message' do
+      join
+      expect(body_as_json[:data]).to have(1).items
+    end
+
+    it 'returned message is a join message' do
+      join(user: 1)
+      message = body_as_json[:data][0]
+      expect(message[:attributes][:body]).to eq("User 1 joined to the conversation")
+    end
+
+    it 'returns moment equal to last created message' do
+      join
+      expect(body_as_json[:meta][:moment]).to eq(Message.order(:id).last.id)
+    end
   end
 end

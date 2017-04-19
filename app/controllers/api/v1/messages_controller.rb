@@ -6,9 +6,7 @@ class Api::V1::MessagesController < ApplicationController
       return
     end
 
-    messages = Message.received_after(moment)
-    new_moment = messages.map(&:id).max
-    render json: messages, meta: { moment: new_moment}
+    render_messages(Message.received_after(moment))
   end
 
   def create
@@ -18,13 +16,24 @@ class Api::V1::MessagesController < ApplicationController
   end
 
   def join
+    unless (user = params[:user])
+      render_error("'user' is a required parameter")
+      return
+    end
 
+    message = Message.create!(user: 'Nobody', body: "User #{user} joined to the conversation")
+    render_messages([message])
   end
 
   private
 
   def message_params
     params.require(:message).permit(:user, :body)
+  end
+
+  def render_messages(messages)
+    new_moment = messages.map(&:id).max
+    render json: messages, meta: { moment: new_moment}
   end
 
   def render_error(details, status: 400)
