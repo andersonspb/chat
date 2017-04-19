@@ -45,6 +45,7 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.4.0'
   gem 'rspec', '~> 3.4'
   gem 'rspec-rails', '~> 3.4'
+  gem 'rspec-collection_matchers'
 end
 
 group :development do
