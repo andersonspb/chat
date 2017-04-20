@@ -3,7 +3,7 @@ import Message from './Message';
 
 
 const MessageListComponent = ({messages}) =>
-  <ul>
+  <ul className="messages list-unstyled">
     { messages.map(msg => <Message key={msg.id} message={msg} />) }
   </ul>
 
