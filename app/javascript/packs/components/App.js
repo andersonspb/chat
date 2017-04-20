@@ -1,6 +1,7 @@
 import React from 'react'
 import MessageListContainer from '../containers/MessageListContainer'
 import HeaderContainer from '../containers/HeaderContainer'
+import NewMessageForm from '../containers/NewMessageForm'
 
 const App = () => (
   <div>
@@ -14,6 +15,7 @@ const App = () => (
         <MessageListContainer />
       </div>
     </div>
+    <NewMessageForm />
   </div>
 )
 

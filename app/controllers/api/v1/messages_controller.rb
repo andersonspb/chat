@@ -12,7 +12,7 @@ class Api::V1::MessagesController < ApplicationController
   def create
     message = Message.new(message_params)
     message.save
-    render json: message
+    render_message(message)
   end
 
   def join
@@ -34,6 +34,10 @@ class Api::V1::MessagesController < ApplicationController
   def render_messages(messages)
     new_moment = messages.map(&:id).max
     render json: messages, meta: { moment: new_moment}
+  end
+
+  def render_message(message)
+    render json: message, meta: { moment: message.id}
   end
 
   def render_error(details, status: 400)
