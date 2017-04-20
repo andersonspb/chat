@@ -7,6 +7,8 @@ const chatApp  = (state, action) => {
   switch (action.type) {
     case 'ASSIGN_USER':
       return Object.assign({}, state, {user: action.user})
+    case 'MESSAGES_LOADED':
+      return Object.assign({}, state, {messages: state.messages.concat(action.messages)})
     default:
       return state
   }

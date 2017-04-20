@@ -4,13 +4,13 @@ import HeaderContainer from '../containers/HeaderContainer'
 
 const App = () => (
   <div>
-    <div class="row">
-      <div class="col-sm-12">
+    <div className="row">
+      <div className="col-sm-12">
         <HeaderContainer />
       </div>
     </div>
-    <div class="row">
-      <div class="col-sm-12">
+    <div className="row">
+      <div className="col-sm-12">
         <MessageListContainer />
       </div>
     </div>

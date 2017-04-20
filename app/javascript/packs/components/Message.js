@@ -1,6 +1,8 @@
-const Message = ({ user, body }) =>
+import React from 'react';
+
+const Message = ({ user, body, id}) =>
   <li>
-    <span style="font-weight: bold">{user}:</span>
+    <span>{user}:&nbsp;</span>
     {body}
   </li>
 
