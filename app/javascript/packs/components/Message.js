@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Message = ({ user, body, id}) =>
+const Message = ({message}) =>
   <li>
-    <span>{user}:&nbsp;</span>
-    {body}
+    <span>{message.attributes.user}:&nbsp;</span>
+    {message.attributes.body}
   </li>
 
 export default Message
