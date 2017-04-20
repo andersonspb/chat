@@ -1,24 +1,35 @@
-# README
+# Old good polling chat :)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Features
+1. Ruby on Rails 
+2. Polling to the server each N seconds! No long polling! No action cable! Hard and fun!
+3. React + Redux
 
-Things you may want to cover:
+## Requirements
+1. Ruby 2.3.3
+2. Postgresql (Or replace it in Gemfile and database.yml to whatever you comfortable with)
+3. Yarn
 
-* Ruby version
+## Installation
 
-* System dependencies
+git clone git@github.com:andersonspb/chat.git
 
-* Configuration
+cd ./chat
 
-* Database creation
+./bin/bundle install
 
-* Database initialization
+./bin/yarn install
 
-* How to run the test suite
+cp ./config/database.yml.sample ./config/database.yml # And adjust settings
 
-* Services (job queues, cache servers, search engines, etc.)
+./bin/rake db:setup
 
-* Deployment instructions
+./bin/webpack-dev-server
+ 
+./bin/rails server
 
-* ...
+Open http://localhost:3000
+
+
+
+
