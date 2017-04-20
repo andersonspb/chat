@@ -6,7 +6,8 @@ class Api::V1::MessagesController < ApplicationController
       return
     end
 
-    render_messages(Message.received_after(moment))
+    new_messages =  Message.received_after(moment)
+    render_messages(new_messages, new_messages.maximum(:id)||moment)
   end
 
   def create
@@ -22,7 +23,7 @@ class Api::V1::MessagesController < ApplicationController
     end
 
     message = Message.create!(user: 'Nobody', body: "User #{user} joined to the conversation")
-    render_messages([message])
+    render_messages([message], message.id)
   end
 
   private
@@ -31,9 +32,8 @@ class Api::V1::MessagesController < ApplicationController
     params.require(:message).permit(:user, :body)
   end
 
-  def render_messages(messages)
-    new_moment = messages.map(&:id).max
-    render json: messages, meta: { moment: new_moment}
+  def render_messages(messages, moment)
+    render json: messages, meta: { moment: moment}
   end
 
   def render_message(message)
