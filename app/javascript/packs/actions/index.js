@@ -4,8 +4,16 @@ const HEADERS = {'Accept': 'application/json', 'Content-Type': 'application/json
 export const run = () => {
   return (dispatch, getState) => {
     dispatch(assignUser());
-    return dispatch(joinUser());
+    dispatch(joinUser());
   };
+}
+
+const startPolling = () => {
+  return (dispatch, getState) => {
+    setInterval(() => {
+      dispatch(loadMessages())
+    }, 3000);
+  }
 }
 
 export const joinUser = () => {
@@ -21,7 +29,10 @@ export const joinUser = () => {
         headers: HEADERS
       })
       .then((response) => response.json())
-      .then((json) => {dispatch({type: 'MESSAGES_LOADED', messages: json.data, moment: json.meta.moment});})
+      .then((json) => {
+        dispatch({type: 'MESSAGES_LOADED', messages: json.data, moment: json.meta.moment});
+        dispatch(startPolling());
+      })
       .catch((error) => {
         console.error(error);
       });
@@ -55,6 +66,24 @@ export const assignUser = () => {
   return {
     type: 'ASSIGN_USER',
     user: user
+  }
+}
+
+export const loadMessages = () => {
+
+  return (dispatch, getState) => {
+    fetch(`${API_URL}/messages?moment=${getState().moment}`,
+      {
+        method: 'GET',
+        headers: HEADERS
+      })
+      .then((response) => response.json())
+      .then((json) => {
+        dispatch({type: 'MESSAGES_LOADED', messages: json.data, moment: json.meta.moment});
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }
 
