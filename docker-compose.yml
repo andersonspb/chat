@@ -1,0 +1,26 @@
+version: '2'
+services:
+  db:
+    image: postgres
+  web:
+    image: andersonspb/chat
+    command: bash -c "./bin/rake db:setup && ./bin/bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    links:
+      - db
+    depends_on:
+      - db
+      - webpack
+  webpack:
+    image: andersonspb/chat
+    #build: .
+    command: ./bin/webpack-dev-server
+    volumes:
+      - .:/myapp
+    ports:
+      - "8080:8080"
+    environment:
+      - WEBPACK_DEV_SERVER_HOST

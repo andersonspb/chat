@@ -9,8 +9,9 @@ const configPath = resolve('config', 'webpack')
 const loadersDir = join(__dirname, 'loaders')
 const paths = safeLoad(readFileSync(join(configPath, 'paths.yml'), 'utf8'))
 const devServer = safeLoad(readFileSync(join(configPath, 'development.server.yml'), 'utf8'))
+const devServerHost = env.WEBPACK_DEV_SERVER_HOST || devServer.host
 const publicPath = env.NODE_ENV !== 'production' && devServer.enabled ?
-  `http://${devServer.host}:${devServer.port}/` : `/${paths.entry}/`
+  `http://${devServerHost}:${devServer.port}/` : `/${paths.entry}/`
 
 module.exports = {
   devServer,
